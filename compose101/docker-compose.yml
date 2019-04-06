@@ -1,0 +1,38 @@
+version: '3.1'
+  database:
+    image: "mariadb:10.4.3-bionic"
+    environment:
+      DB_NAME: wordpress
+      DB_USER: wordpress
+      DB_PASS: wordpress
+      DB_REMOTE_ROOT_NAME: root
+      DB_REMOTE_ROOT_PASS: workshop
+    volumes:
+      - "/opt/docker/database:/var/lib/mysql:rw"
+  # wordpress image configuration see https://hub.docker.com/r/_/wordpress/
+  wordpress:
+    image: "wordpress:5.1-php7.1-apache"
+    links:
+      - __BLANK__:mysql
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: __BLANK__:3306
+      WORDPRESS_DB_NAME: __BLANK__
+      WORDPRESS_DB_USER: __BLANK__
+      WORDPRESS_DB_PASSWORD: __BLANK__
+      WORDPRESS_AUTH_KEY: SECURE_AUTH_KEY
+      WORDPRESS_LOGGED_IN_KEY: SECURE_LOGGED_IN_KEY
+      WORDPRESS_AUTH_SALT: SECURE_AUTH_SALT
+      WORDPRESS_LOGGED_IN_SALT: SECURE_LOGGED_IN_SALT
+  # phpmyadmin image configuration see https://hub.docker.com/r/phpmyadmin/phpmyadmin/
+  phpmyadmin:
+    image: "phpmyadmin/phpmyadmin:4.8"
+    links:
+      - database:mysql
+    ports:
+      - 8181:80
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: workshop
