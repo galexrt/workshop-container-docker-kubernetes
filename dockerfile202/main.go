@@ -17,10 +17,10 @@ func helloHandler(res http.ResponseWriter, req *http.Request) {
 		`<!doctype html>
 		<html>
 	<head>
-		<title>Hello Gopher</title>
+		<title>Hello Workshop!</title>
 	</head>
 	<body>
-		Hello Gopher </br>
+		Hello Workshop </br>
 		It is really awesome that both Docker and Kubernetes are written in Go!
 	</body>
 </html>`,

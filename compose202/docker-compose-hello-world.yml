@@ -1,0 +1,8 @@
+# This `docker-compose` file will show that you can trigger a build from it
+version: '3.1'
+services:
+  web:
+    # We can even say to build a Docker image from a directory (needs to have a Dockerfile in it)
+    build: hello-world/
+    ports:
+      - 8000:8000
