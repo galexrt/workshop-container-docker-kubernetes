@@ -10,7 +10,7 @@ resource "cloudflare_record" "dns_v4" {
 resource "cloudflare_record" "dns_v6" {
   count   = "${var.record_count}"
   domain  = "${var.domain}"
-  value   = "${element(var.addresses_ipv6, count.index)}"
+  value   = "${element(formatlist("%s1", var.addresses_ipv6), count.index)}"
   name    = "${element(var.names, count.index)}"
   type    = "AAAA"
   proxied = "${var.proxied}"
