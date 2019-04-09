@@ -1,0 +1,62 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: infra
+  namespace: monitoring
+  labels:
+    k8s-app: prometheus
+    prometheus: infra
+spec:
+  alerting:
+    alertmanagers:
+    - namespace: monitoring
+      name: alertmanager-infra
+      port: web
+  baseImage: quay.io/prometheus/prometheus
+  nodeSelector:
+    beta.kubernetes.io/os: linux
+  replicas: 2
+  serviceAccountName: prometheus-infra
+  retention: 744h
+  version: v2.8.1
+  serviceMonitorNamespaceSelector: {}
+  serviceMonitorSelector:
+    matchExpressions:
+    - key: k8s-app
+      operator: Exists
+  scrapeInterval: 15s
+  ruleSelector:
+    matchLabels:
+      role: alert-rules
+      prometheus: infra
+  resources:
+    limits:
+      cpu: "1"
+      memory: "4Gi"
+    requests:
+      cpu: "384m"
+      memory: "1.25Gi"
+  secrets: []
+#  - etcd-client-tls
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - topologyKey: "kubernetes.io/hostname"
+          labelSelector:
+            matchExpressions:
+              - key: "prometheus"
+                operator: In
+                values:
+                - "infra"
+  storage:
+    volumeClaimTemplate:
+      spec:
+        storageClassName: rook-ceph-block-repl-3-1
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 100Gi
+  securityContext:
+    fsGroup: 65534
+    runAsNonRoot: true
+    runAsUser: 65534

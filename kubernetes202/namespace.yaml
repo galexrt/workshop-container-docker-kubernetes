@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    k8s02.io/owner: cluster
+    k8s02.io/type: cluster
+  name: monitoring

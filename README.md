@@ -13,8 +13,3 @@ You will soon find the Workshop post/instructions on my blog [Edenmal](https://e
 * [`kubernetes202/`](kubernetes202/) - Kubernetes related files for 202 section.
 * [`kubernetes303/`](kubernetes303/) - Kubernetes related files for 303 section.
 * [`network101/`](network101/) - Network related files for 101 section.
-
-## TODO
-
-* kubernetes202
-* kubernetes303

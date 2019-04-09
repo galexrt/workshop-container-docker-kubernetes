@@ -1,0 +1,11 @@
+apiVersion: v1
+data:
+    GF_SECURITY_ADMIN_PASSWORD: ffgggugworkshop
+    #GF_DOMAIN: ""
+    GF_ROOT_URL: "%(protocol)s://%(domain)s/grafana/"
+kind: ConfigMap
+metadata:
+    labels:
+        app: grafana
+    name: grafana-env
+    namespace: monitoring

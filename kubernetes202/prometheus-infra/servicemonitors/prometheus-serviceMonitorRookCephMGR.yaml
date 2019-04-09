@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    k8s-app: rook-ceph-mgr
+  name: rook-ceph-mgr
+  namespace: monitoring
+spec:
+  endpoints:
+  - port: http-metrics
+    path: /metrics
+    interval: 5s
+  namespaceSelector:
+    matchNames:
+    - rook-ceph
+  selector:
+    matchLabels:
+      app: rook-ceph-mgr
+      rook_cluster: rook-ceph
