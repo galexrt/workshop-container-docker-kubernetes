@@ -10,6 +10,8 @@ sh install-docker.sh
 systemctl enable docker.service
 systemctl start docker.service
 docker ps
+curl -sS -o /etc/sysctl.d/90-edenmal-custom.conf https://gist.githubusercontent.com/galexrt/8faa48a05bab303ec922bd89e8f7adc5/raw/63302c8d2374d198e09f7b8b9ad3cbdd31eb9061/90-edenmal-custom.conf
+sysctl -p
 EOF
     if echo "$server" | grep -q -- -master-; then
         continue
