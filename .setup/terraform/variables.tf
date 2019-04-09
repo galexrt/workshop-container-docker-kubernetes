@@ -20,12 +20,12 @@ variable "hcloud_token" {
 
 variable "hcloud_master_instance_type" {
   type    = "string"
-  default = "cx11"
+  default = "cx21"
 }
 
 variable "hcloud_worker_instance_type" {
   type    = "string"
-  default = "cx11"
+  default = "cx21"
 }
 
 # DNS
