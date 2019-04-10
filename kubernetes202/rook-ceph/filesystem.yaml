@@ -1,56 +1,31 @@
 apiVersion: ceph.rook.io/v1
 kind: CephFilesystem
 metadata:
-  name: repl-2-1
-  namespace: rook-ceph
+    name: repl-2-1
+    namespace: rook-ceph
 spec:
-  # The metadata pool spec
-  metadataPool:
-    replicated:
-      # Increase the replication size if you have more than one osd
-      size: 2
-  # The list of data pool specs
-  dataPools:
-    - failureDomain: osd
-      replicated:
-        size: 2
-  # The metadata service (mds) configuration
-  metadataServer:
-    # The number of active MDS instances
-    activeCount: 2
-    # Whether each active MDS instance will have an active standby with a warm metadata cache for faster failover.
-    # If false, standbys will be available, but will not have a warm cache.
-    activeStandby: true
-    # The affinity rules to apply to the mds deployment
-    placement:
-      podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: "app"
-                    operator: In
-                    values:
-                    - rook-ceph-mds
-              topologyKey: "kubernetes.io/hostname"
-            - labelSelector:
-                matchExpressions:
-                  - key: "rook_file_system"
-                    operator: In
-                    values:
-                    - repl-2-1
-              topologyKey: "kubernetes.io/hostname"
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: node-role.kubernetes.io/storage-ceph
-              operator: In
-              values:
-              - ""
-    resources:
-      limits:
-        cpu: "3"
-        memory: "8192Mi"
-      requests:
-        cpu: "750m"
-        memory: "512Mi"
+    # The metadata pool spec
+    metadataPool:
+        replicated:
+            # Increase the replication size if you have more than one osd
+            size: 2
+    # The list of data pool specs
+    dataPools:
+        - failureDomain: osd
+          replicated:
+              size: 2
+    # The metadata service (mds) configuration
+    metadataServer:
+        # The number of active MDS instances
+        activeCount: 2
+        # Whether each active MDS instance will have an active standby with a warm metadata cache for faster failover.
+        # If false, standbys will be available, but will not have a warm cache.
+        activeStandby: true
+        # The affinity rules to apply to the mds deployment
+        resources:
+            limits:
+                cpu: "3"
+                memory: "8192Mi"
+            requests:
+                cpu: "750m"
+                memory: "512Mi"
