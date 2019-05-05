@@ -1,0 +1,17 @@
+apiVersion: v1
+data:
+  # You can have multiple key / value pairs in one `ConfigMap`
+  MY_API_SERVICE_ADDRESS: https://my-api-service.example.com
+  # You can specify which keys of a `ConfigMap` to mount in a Pod
+  config.yaml: |
+    database:
+      host: broker
+      port: 5234
+      username: root
+      # Will be read from the environment by the application reading the `config.yaml`
+      password: ${DB_USER}
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: my-app
+  name: my-config

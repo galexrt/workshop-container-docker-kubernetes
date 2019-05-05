@@ -1,7 +1,7 @@
 apiVersion: ceph.rook.io/v1
 kind: CephBlockPool
 metadata:
-    name: block-repl-3-1
+    name: block-repl-2-1
     namespace: rook-ceph
 spec:
     # The failure domain will spread the replicas of the data across different failure zones

@@ -6,7 +6,7 @@ metadata:
         storageclass.kubernetes.io/is-default-class: "true"
 provisioner: ceph.rook.io/block
 parameters:
-    blockPool: block-repl-3-1
+    blockPool: block-repl-2-1
     # Specify the namespace of the rook cluster from which to create volumes.
     # If not specified, it will use `rook` as the default namespace of the cluster.
     # This is also the namespace where the cluster will be
