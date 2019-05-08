@@ -4,17 +4,17 @@ metadata:
   name: mysql
   labels:
     app.kubernetes.io/name: mysql
-    app.kubernetes.io/part-of: mysql
+    app.kubernetes.io/part-of: wordpress
 spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: mysql
-      app.kubernetes.io/part-of: mysql
+      app.kubernetes.io/part-of: wordpress
   template:
     metadata:
       labels:
         app.kubernetes.io/name: mysql
-        app.kubernetes.io/part-of: mysql
+        app.kubernetes.io/part-of: wordpress
     spec:
       containers:
       - image: mysql:5.6
