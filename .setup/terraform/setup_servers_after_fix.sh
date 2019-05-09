@@ -4,18 +4,30 @@ while read -r line; do
     server="$(echo "$line" | cut -d';' -f1)"
     password="$(echo "$line" | cut -d';' -f2)"
     echo "-> $server"
-    ssh -4 -o StrictHostKeyChecking=no -o GlobalKnownHostsFile=/dev/null -o UserKnownHostsFile=/dev/null ${server} <<EOF &
+    ssh -4 -o StrictHostKeyChecking=no -o GlobalKnownHostsFile=/dev/null -o UserKnownHostsFile=/dev/null ${server} <<EOSCRIPT &
 curl -sSL https://get.docker.com/ -o install-docker.sh
 sh install-docker.sh
+cat > /etc/docker/daemon.json <<EOF
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m"
+  },
+  "storage-driver": "overlay2"
+}
+EOF
+
+mkdir -p /etc/systemd/system/docker.service.d
 systemctl enable docker.service
 systemctl start docker.service
 docker ps
 curl -sS -o /etc/sysctl.d/90-edenmal-custom.conf https://gist.githubusercontent.com/galexrt/8faa48a05bab303ec922bd89e8f7adc5/raw/63302c8d2374d198e09f7b8b9ad3cbdd31eb9061/90-edenmal-custom.conf
 sysctl -p
-dnf -y install git
-EOF
-done
-wait
+dnf -y install git vim
+EOSCRIPT
+done < servers.txt
+
 while read -r line; do
     server="$(echo "$line" | cut -d';' -f1)"
     if echo "$server" | grep -q master-; then

@@ -9,10 +9,11 @@ fi
 :> servers.txt
 
 for (( i=1; i<=$1; i++ )); do
-    PLAIN_PASS=2019-guug-ffg-workshop-${i}
+    PLAIN_PASS=training-kubernetes-cloud-2019
     echo "root@k8s-c${i}-master-1.eden.run;${PLAIN_PASS}" >> servers.txt
     echo "root@k8s-c${i}-worker-1.eden.run;${PLAIN_PASS}" >> servers.txt
     echo "root@k8s-c${i}-worker-2.eden.run;${PLAIN_PASS}" >> servers.txt
+    echo "root@k8s-c${i}-worker-3.eden.run;${PLAIN_PASS}" >> servers.txt
     cat << 'EOF' | sed -e 's/_1_/_'"${i}"'_/g' -e 's/"1"/"'"${i}"'"/g' -e 's/#1/#'"${i}"'/g' -e 's/__PLAIN_PASS__/'"${PLAIN_PASS}"'/g' >> attendee_clusters.tf
 # Attendee #1 - __PLAIN_PASS__
 module "hcloud_kubernetes_attendee_1_master" {
